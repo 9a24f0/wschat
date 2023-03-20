@@ -5,14 +5,14 @@
         <img :src="faceCurrent.srcImg" alt="" />
       </div>
       <header class="header">
-        <div class="icon"><arrow-left-outlined /></div>
+        <div class="icon" @click="backHref"><arrow-left-outlined /></div>
         <div class="header-main">
           <div class="header-main-avatar">
             <img :src="faceCurrent.srcImg" />
             <div class="header-main-avatar-online"></div>
           </div>
           <div class="header-main-infor">
-            <div class="header-main-name">{{ faceCurrent.name }}</div>
+            <div class="header-main-name">Phòng VIP : {{ faceCurrent.name }}</div>
             <div class="header-main-nick">Hoạt động 10 phút trước</div>
           </div>
         </div>
@@ -37,7 +37,7 @@
             :class="this.face == item.face ? 'reverse' : ''"
           >
             <img :src="item.srcImg" />
-            <span class="">{{ item.text }} </span>
+            <span class="content-chat">{{ item.text }} </span>
           </li>
         </ul>
       </main>
@@ -92,6 +92,9 @@ import EmoJiPicker from "./components/EmoJiPicker.vue";
 export default {
   props: ["face"],
   methods: {
+    backHref(){
+      this.$router.go(-1)
+    },
     forcusTextChat() {
       this.isShowDialogEmojiPicker = false;
     },

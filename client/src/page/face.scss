@@ -8,7 +8,7 @@
     .container {
         position: relative;
         margin: 0 auto;
-        width: 750px;
+        max-width: 750px;
         height: 100vh;
         background-color: #313131;
 
@@ -184,6 +184,8 @@
                         border-radius: 8px;
                         margin: 0 8px;
                         background-color: rgba($color: aqua, $alpha: 0.1);
+                        word-break: break-all;
+                        max-width: 60%;
                     }
                 }
 
@@ -195,7 +197,7 @@
     }
 
     .icon {
-        font-size: 30px;
+        font-size: 20px;
         color: aqua;
         cursor: pointer;
 

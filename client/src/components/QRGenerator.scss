@@ -1,0 +1,47 @@
+#QRcode {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+
+    .QRcode-input {
+        display: flex;
+        width: 100%;
+        gap: 12px;
+        align-items: center;
+
+        .color {
+            position: relative;
+
+            &-input {
+                width: 30px;
+                height: 30px;
+                position: absolute;
+                top: 20%;
+                right: 0;
+                background-color: transparent;
+                border: none;
+            }
+        }
+
+        .input {
+            background-color: transparent;
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+        .go-room{
+            // border: 1px solid ;
+            border-radius: 12px;
+            margin-left: 20px;
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            padding: 12px 20px;
+            cursor: pointer;
+            &:hover{
+                box-shadow: rgba(27, 216, 207, 0.2) 0px 7px 29px 0px;
+                background-color: rgba(27, 216, 207, 0.2);
+            }
+        }
+    }
+    .color-box{
+
+    }
+}
