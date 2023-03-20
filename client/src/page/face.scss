@@ -111,13 +111,15 @@
                 border-radius: 16px;
                 position: relative;
 
-                .box{
+                .box {
                     position: relative;
-                    .emoji{
+
+                    .emoji {
                         position: absolute;
                         top: -420px;
                         right: 0;
-                        &::after{
+
+                        &::after {
                             content: "";
                             border: 10px solid black;
                             border-right: transparent 10px solid;
@@ -157,7 +159,6 @@
                 overflow-y: auto;
                 display: flex;
                 flex-direction: column;
-                flex-direction: column-reverse;
 
                 &::-webkit-scrollbar {
                     display: none;

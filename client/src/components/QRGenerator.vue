@@ -1,11 +1,9 @@
-
-
 <script setup>
 import { toString } from "qrcode";
-import { saveAs } from "file-saver";
+import { useRouter } from "vue-router";
 import { reactive, ref, watch } from "vue";
-import "./QRGenerator.scss"; 
-import {DoubleRightOutlined} from "@ant-design/icons-vue";
+import "./QRGenerator.scss";
+import { DoubleRightOutlined } from "@ant-design/icons-vue";
 
 const qr = reactive({
   url: "",
@@ -40,6 +38,11 @@ const generateQr = () => {
   );
 };
 
+const router = useRouter();
+const gotoRoomChat = () => {
+  console.log("tuancan", qr.url_input);
+  router.push(`/${qr.url_input}`);
+};
 
 const debounceSearch = () => {
   if (qr.url_input_timeout) {
@@ -58,7 +61,7 @@ const debounceSearch = () => {
       <div class="QRcode-input">
         <div class="input">
           <input
-          class="input"
+            class="input"
             v-model="qr.url_input"
             type="text"
             id="url"
@@ -70,12 +73,12 @@ const debounceSearch = () => {
         <div class="color">
           <div>
             <input
-            class="input"
-            v-model="color"
-            type="text"
-            id="qr-color-val"
-            name="qr-color-val"
-          />
+              class="input"
+              v-model="color"
+              type="text"
+              id="qr-color-val"
+              name="qr-color-val"
+            />
           </div>
 
           <div class="color-box">
@@ -88,12 +91,13 @@ const debounceSearch = () => {
             />
           </div>
         </div>
-        <div class="go-room"> <double-right-outlined /> Go Room</div>
+        <div class="go-room" @click="gotoRoomChat">
+          <double-right-outlined /> Go Room
+        </div>
       </div>
       <div v-if="qr.output" class="text-center">
         <div class="grid md:grid-cols-2 items-center">
           <div v-html="qr.output" class="viewer mx-auto"></div>
-         
         </div>
       </div>
     </div>

@@ -2,17 +2,27 @@
   <div id="face">
     <div class="container">
       <div class="background-avatar">
-        <img :src="faceCurrent.srcImg" alt="" />
+        <!-- <img :src="faceCurrent.srcImg" alt="" /> -->
+        <img
+          src="https://avatar-ex-swe.nixcdn.com/singer/avatar/2018/01/24/a/3/d/e/1516765405718_600.jpg"
+          alt=""
+        />
       </div>
       <header class="header">
         <div class="icon" @click="backHref"><arrow-left-outlined /></div>
         <div class="header-main">
           <div class="header-main-avatar">
-            <img :src="faceCurrent.srcImg" />
+            <!-- <img :src="faceCurrent.srcImg" /> -->
+            <img
+              src="https://avatar-ex-swe.nixcdn.com/singer/avatar/2018/01/24/a/3/d/e/1516765405718_600.jpg"
+            />
             <div class="header-main-avatar-online"></div>
           </div>
           <div class="header-main-infor">
-            <div class="header-main-name">Phòng VIP : {{ faceCurrent.name }}</div>
+            <div class="header-main-name">
+              <!-- Phòng VIP : {{ faceCurrent.name }} -->
+              Phòng VIP : {{ face }}
+            </div>
             <div class="header-main-nick">Hoạt động 10 phút trước</div>
           </div>
         </div>
@@ -29,8 +39,8 @@
         </div>
       </header>
       <main class="body-chat-box">
-        <ul class="main-chat">
-          <li
+        <ul class="main-chat" ref="msgContainer">
+          <!-- <li
             class="main-liter"
             v-for="item in chat1"
             :key="item.face"
@@ -38,6 +48,17 @@
           >
             <img :src="item.srcImg" />
             <span class="content-chat">{{ item.text }} </span>
+          </li> -->
+          <li
+            class="main-liter"
+            v-for="item in messageList"
+            :key="item.id"
+            :class="this.face == item.face ? 'reverse' : ''"
+          >
+            <img
+              src="https://haycafe.vn/wp-content/uploads/2021/11/Anh-avatar-dep-chat-lam-hinh-dai-dien.jpg"
+            />
+            <span class="content-chat">{{ item.message }} </span>
           </li>
         </ul>
       </main>
@@ -91,27 +112,43 @@ import {
 import EmoJiPicker from "./components/EmoJiPicker.vue";
 export default {
   props: ["face"],
+  updated() {
+    // whenever data changes and the component re-renders, this is called.
+    this.$nextTick(() => {
+      var container = this.$refs.msgContainer;
+      container.scrollTop = container.scrollHeight;
+    });
+  },
   methods: {
-    backHref(){
-      this.$router.go(-1)
+    sendMessage() {
+      if (this.textChat.trim()) {
+        this.socket.send(this.textChat.trim());
+        this.textChat = "";
+      } else return;
+    },
+
+    backHref() {
+      this.$router.go(-1);
     },
     forcusTextChat() {
       this.isShowDialogEmojiPicker = false;
     },
-    sendMessage() {
-      this.isShowDialogEmojiPicker = false;
-      const itemChat = {
-        srcImg: this.faceCurrent.srcImg,
-        face: this.face,
-        text: this.textChat.trim(),
-      };
-      if (itemChat.text) {
-        this.chat1.unshift(itemChat);
-        this.textChat = "";
-      } else {
-        return;
-      }
-    },
+    // sendMessage() {
+    //   this.isShowDialogEmojiPicker = false;
+    //   const itemChat = {
+    //     // srcImg: this.faceCurrent.srcImg,
+    //     srcImg:
+    //       "https://avatar-ex-swe.nixcdn.com/singer/avatar/2018/01/24/a/3/d/e/1516765405718_600.jpg",
+    //     face: this.face,
+    //     text: this.textChat.trim(),
+    //   };
+    //   if (itemChat.text) {
+    //     this.chat1.unshift(itemChat);
+    //     this.textChat = "";
+    //   } else {
+    //     return;
+    //   }
+    // },
     showDialogPickerEmoji() {
       this.isShowDialogEmojiPicker = true;
     },
@@ -192,7 +229,23 @@ export default {
           text: "thoi o nha di",
         },
       ],
+      socket: new WebSocket("ws:/localhost:3000"),
+      messageList: [
+        { id: 0, message: "Hello" },
+        { id: 1, message: "Bonjour" },
+        { id: 2, message: "Konichiwa" },
+      ],
     };
+  },
+
+  mounted() {
+    this.socket.onmessage = (event) => {
+      this.messageList.push({
+        id: this.messageList.length,
+        message: event.data,
+      });
+    };
+    console.log("this.messageList", this.messageList);
   },
   created() {
     if (this.face === "face1") {

@@ -1,15 +1,14 @@
 <template>
   <div>
     <div id="home">
-      <h1 style="margin-top: 50px;">Chat client with WEBSOCKET</h1>
+      <h1 style="margin-top: 50px">Chat client with WEBSOCKET</h1>
     </div>
     <!-- <div class="face-button">
       <button><router-link to="/face1">face1</router-link></button>
       <button><router-link to="/face2">face2</router-link></button>
       <button><router-link to="/face3">face3</router-link></button>
     </div> -->
-  <QRGenerator></QRGenerator>
-
+    <QRGenerator></QRGenerator>
   </div>
 </template>
 
