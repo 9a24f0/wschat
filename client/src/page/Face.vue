@@ -51,10 +51,22 @@
             placeholder=""
             id="w3review"
             name="w3review"
-            rows="2"
+            rows="1"
             v-model="textChat"
+            @focus="forcusTextChat"
+            @keyup.enter="sendMessage"
           ></textarea>
-          <div class="icon"><smile-outlined /></div>
+          <div class="box">
+            <div class="icon" @click="showDialogPickerEmoji">
+              <smile-outlined />
+            </div>
+            <div v-if="isShowDialogEmojiPicker" class="emoji">
+              <EmoJiPicker
+                @emoji_click="getEmojiPicker"
+                @closeDialogEmojiPicker="closeDialogEmojiPicker"
+              />
+            </div>
+          </div>
         </div>
         <div class="icon" @click="sendMessage"><send-outlined /></div>
       </footer>
@@ -76,18 +88,36 @@ import {
   SendOutlined,
   SmileOutlined,
 } from "@ant-design/icons-vue";
+import EmoJiPicker from "./components/EmoJiPicker.vue";
 export default {
   props: ["face"],
   methods: {
+    forcusTextChat() {
+      this.isShowDialogEmojiPicker = false;
+    },
     sendMessage() {
+      this.isShowDialogEmojiPicker = false;
       const itemChat = {
         srcImg: this.faceCurrent.srcImg,
         face: this.face,
-        text: this.textChat,
+        text: this.textChat.trim(),
       };
-      this.chat.unshift(itemChat);
-      this.textChat = "";
-      console.log("tuancan", this.face, itemChat);
+      if (itemChat.text) {
+        this.chat1.unshift(itemChat);
+        this.textChat = "";
+      } else {
+        return;
+      }
+    },
+    showDialogPickerEmoji() {
+      this.isShowDialogEmojiPicker = true;
+    },
+    closeDialogEmojiPicker() {
+      this.isShowDialogEmojiPicker = false;
+    },
+    getEmojiPicker(value) {
+      console.log(value);
+      this.textChat += value;
     },
   },
   components: {
@@ -102,27 +132,13 @@ export default {
     LikeOutlined,
     InfoCircleOutlined,
     SendOutlined,
-  },
-  created() {
-    if (this.face === "face1") {
-      this.faceCurrent = this.face1;
-    }
-    if (this.face === "face2") {
-      this.faceCurrent = this.face2;
-    }
-    if (this.face === "face3") {
-      this.faceCurrent = this.face3;
-    }
-  },
-  computed: {
-    chat1() {
-      return this.chat;
-    },
+    EmoJiPicker,
   },
   data() {
     return {
       textChat: "",
       faceCurrent: null,
+      isShowDialogEmojiPicker: false,
       face1: {
         srcImg: "https://nguoinoitieng.tv/images/nnt/103/0/bg5a.jpg",
         name: "Nguyễn Thị Hiền Lương",
@@ -175,5 +191,22 @@ export default {
       ],
     };
   },
+  created() {
+    if (this.face === "face1") {
+      this.faceCurrent = this.face1;
+    }
+    if (this.face === "face2") {
+      this.faceCurrent = this.face2;
+    }
+    if (this.face === "face3") {
+      this.faceCurrent = this.face3;
+    }
+  },
+  computed: {
+    chat1() {
+      return this.chat;
+    },
+  },
+  watch: {},
 };
 </script>

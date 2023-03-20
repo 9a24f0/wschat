@@ -13,9 +13,7 @@
       <button><router-link to="/face2">face2</router-link></button>
       <button><router-link to="/face3">face3</router-link></button>
     </div>
-    <div id="app">
-      <router-view></router-view>
-    </div>
+
   </div>
 </template>
 
