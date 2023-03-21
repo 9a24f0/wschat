@@ -3,7 +3,7 @@
     <div class="container">
       <div class="background-avatar">
         <img
-          src="https://avatar-ex-swe.nixcdn.com/singer/avatar/2018/01/24/a/3/d/e/1516765405718_600.jpg"
+          src="https://tenten.vn/tin-tuc/wp-content/uploads/2022/09/websocket-la-gi-1.jpeg"
           alt=""
         />
       </div>
@@ -12,25 +12,25 @@
         <div class="header-main">
           <div class="header-main-avatar">
             <img
-              src="https://avatar-ex-swe.nixcdn.com/singer/avatar/2018/01/24/a/3/d/e/1516765405718_600.jpg"
+              src="https://tenten.vn/tin-tuc/wp-content/uploads/2022/09/websocket-la-gi-1.jpeg"
             />
             <div class="header-main-avatar-online"></div>
           </div>
           <div class="header-main-infor">
             <div class="header-main-name">Channel : {{ channel }}</div>
-            <div class="header-main-nick">Hoạt động 10 phút trước</div>
+            <div class="header-main-nick">WEBSOCKET</div>
           </div>
         </div>
         <div class="header-contact">
-          <div class="header-phone icon">
-            <phone-outlined style="color: aqua" />
+          <!-- <div class="header-phone icon">
+            <phone-outlined />
           </div>
           <div class="header-video icon">
-            <video-camera-outlined style="color: aqua" />
+            <video-camera-outlined  />
           </div>
           <div class="header-video icon">
-            <info-circle-outlined style="color: aqua" />
-          </div>
+            <info-circle-outlined />
+          </div> -->
         </div>
       </header>
       <main class="body-chat-box">
@@ -39,26 +39,26 @@
             class="main-liter"
             v-for="item in messageList"
             :key="item.id"
-            :class="this.channel == item.channel ? 'reverse' : ''"
+            :class="item.name == this.userName ? 'reverse' : ''"
           >
             <img
-              src="https://haycafe.vn/wp-content/uploads/2021/11/Anh-avatar-dep-chat-lam-hinh-dai-dien.jpg"
+              :src="item.img"
             />
             <span class="content-chat">{{ item.message }} </span>
           </li>
         </ul>
       </main>
       <footer class="footer">
-        <div class="icon"><setting-outlined /></div>
+        <!-- <div class="icon"><setting-outlined /></div>
         <div class="icon"><camera-outlined /></div>
         <div class="icon"><file-image-outlined /></div>
-        <div class="icon"><audio-outlined /></div>
+        <div class="icon"><audio-outlined /></div> -->
         <div class="text-chat">
           <textarea
             placeholder=""
             id="w3review"
             name="w3review"
-            rows="1"
+            rows="2"
             v-model="textChat"
             @focus="forcusTextChat"
             @keyup.enter="sendMessage"
@@ -107,7 +107,12 @@ export default {
   methods: {
     sendMessage() {
       if (this.textChat.trim()) {
-        this.socket.send(this.textChat.trim());
+        const formChat = {
+          textChat: this.textChat.trim(),
+          userName: window.localStorage.getItem("username"),
+          imgAvatar: "https://i.pinimg.com/736x/6e/af/1a/6eaf1a844ae4b6fa6eeb6ff17f468cc0.jpg"
+        };
+        this.socket.send(JSON.stringify(formChat));
         this.textChat = "";
       } else return;
     },
@@ -144,6 +149,7 @@ export default {
   },
   data() {
     return {
+      userName : window.localStorage.getItem("username"),
       textChat: "",
       faceCurrent: null,
       isShowDialogEmojiPicker: false,
@@ -153,10 +159,12 @@ export default {
   },
   mounted() {
     this.socket.onmessage = async (event) => {
-      const message = await new Response(event.data).text();
+      const messageForm = JSON.parse(await new Response(event.data).text());
       this.messageList.push({
         id: this.messageList.length,
-        message,
+        message: messageForm.textChat,
+        img: messageForm.imgAvatar,
+        name: messageForm.userName
       });
     };
   },
@@ -189,14 +197,14 @@ export default {
         width: 100%;
         height: 100%;
         opacity: 0.1;
-        object-fit: cover;
+        object-fit: fill;
       }
     }
 
     .header {
       position: relative;
       display: flex;
-      padding: 20px 20px;
+      padding: 12px 20px;
       justify-content: space-between;
       gap: 16px;
       align-items: center;
@@ -210,8 +218,8 @@ export default {
         color: #ffffff;
 
         &-avatar {
-          width: 50px;
-          height: 50px;
+          width: 36px;
+          height: 36px;
           position: relative;
 
           &-online {
@@ -307,7 +315,8 @@ export default {
           border: none;
           flex: 1;
           color: #ffffff;
-
+          max-height: 60px;
+          resize: none;
           &::-webkit-scrollbar {
             display: none;
             /* for Chrome, Safari, and Opera */
