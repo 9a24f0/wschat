@@ -1,10 +1,10 @@
 # Server
 
-on `/server/`, compile server with:
+on `server/`, compile server with:
 ```
-tsc server.ts
+tsc
 ```
-After compile, we have `server.js` in `/dist/`, then run the server with:
+After compile, we have `server.js` in `dist/`, then run the server with:
 ```
 node dist/server.js
 ```
