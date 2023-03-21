@@ -9,8 +9,8 @@ export const router = createRouter({
       name: "home",
     },
     {
-      path: "/:face",
-      component: () => import("../page/Face.vue"),
+      path: "/:channel",
+      component: () => import("../page/Channel.vue"),
       props: true,
     },
   ],
