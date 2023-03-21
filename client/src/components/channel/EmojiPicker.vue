@@ -24,7 +24,7 @@
 </template>
 <script>
 import { CloseOutlined } from "@ant-design/icons-vue";
-import emoji_picker from "../mixin/emojis-data.json";
+import emoji_picker from "../../mixin/emojis-data.json";
 export default {
   props: {},
   components: {

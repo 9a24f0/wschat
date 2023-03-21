@@ -39,7 +39,7 @@
             class="main-liter"
             v-for="item in messageList"
             :key="item.id"
-            :class="this.face == item.face ? 'reverse' : ''"
+            :class="this.channel == item.channel ? 'reverse' : ''"
           >
             <img
               src="https://haycafe.vn/wp-content/uploads/2021/11/Anh-avatar-dep-chat-lam-hinh-dai-dien.jpg"
@@ -94,7 +94,7 @@ import {
   SendOutlined,
   SmileOutlined,
 } from "@ant-design/icons-vue";
-import EmoJiPicker from "./components/EmoJiPicker.vue";
+import EmoJiPicker from "@/components/channel/EmojiPicker.vue";
 export default {
   props: ["channel"],
   updated() {
@@ -148,11 +148,7 @@ export default {
       faceCurrent: null,
       isShowDialogEmojiPicker: false,
       socket: new WebSocket("ws:/localhost:3000"),
-      messageList: [
-        { id: 0, message: "Hello" },
-        { id: 1, message: "Bonjour" },
-        { id: 2, message: "Konichiwa" },
-      ],
+      messageList: [],
     };
   },
   mounted() {
@@ -160,7 +156,7 @@ export default {
       const message = await new Response(event.data).text();
       this.messageList.push({
         id: this.messageList.length,
-        message
+        message,
       });
     };
   },
@@ -329,13 +325,22 @@ export default {
         padding: 0;
         list-style-type: none;
         height: 75vh;
-        overflow-y: auto;
+        overflow-y: scroll;
         display: flex;
         flex-direction: column;
 
+        &::-webkit-scrollbar-track {
+          background-color: transparent;
+        }
+
         &::-webkit-scrollbar {
-          display: none;
-          /* for Chrome, Safari, and Opera */
+          width: 6px;
+          background-color: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background-color: transparent;
+          border: 2px solid #555555;
         }
 
         .main-liter {

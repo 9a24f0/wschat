@@ -1,11 +1,11 @@
 <template>
   <div>
-    <QRGenerator></QRGenerator>
+    <QRGenerator :qr="qr"></QRGenerator>
   </div>
 </template>
 
 <script>
-import QRGenerator from "./QRGenerator.vue";
+import QRGenerator from "../components/home/QRGenerator.vue";
 export default {
   components: { QRGenerator },
 };

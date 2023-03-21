@@ -4,6 +4,7 @@ import { useRouter } from "vue-router";
 import { reactive, ref } from "vue";
 import { DoubleRightOutlined } from "@ant-design/icons-vue";
 
+const props = defineProps(['qr'])
 const qr = reactive({
   url: "",
   svg_output: "",
@@ -28,7 +29,6 @@ const generateQr = () => {
 
 const router = useRouter();
 const gotoRoomChat = () => {
-  console.log("tuancan", username.value);
   router.push(`/${qr.url_input}`);
 };
 
