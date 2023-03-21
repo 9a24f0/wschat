@@ -2,23 +2,18 @@
   <div id="face">
     <div class="container">
       <div class="background-avatar">
-        <img
-          src="https://tenten.vn/tin-tuc/wp-content/uploads/2022/09/websocket-la-gi-1.jpeg"
-          alt=""
-        />
+        <img :src="imgAvatar" alt="" />
       </div>
       <header class="header">
         <div class="icon" @click="backHref"><arrow-left-outlined /></div>
         <div class="header-main">
           <div class="header-main-avatar">
-            <img
-              src="https://tenten.vn/tin-tuc/wp-content/uploads/2022/09/websocket-la-gi-1.jpeg"
-            />
+            <img :src="imgAvatar" />
             <div class="header-main-avatar-online"></div>
           </div>
           <div class="header-main-infor">
             <div class="header-main-name">Channel : {{ channel }}</div>
-            <div class="header-main-nick">WEBSOCKET</div>
+            <div class="header-main-nick">Your name: {{ userName }}</div>
           </div>
         </div>
         <div class="header-contact">
@@ -41,9 +36,7 @@
             :key="item.id"
             :class="item.name == this.userName ? 'reverse' : ''"
           >
-            <img
-              :src="item.img"
-            />
+            <img :src="item.img" />
             <span class="content-chat">{{ item.message }} </span>
           </li>
         </ul>
@@ -55,7 +48,7 @@
         <div class="icon"><audio-outlined /></div> -->
         <div class="text-chat">
           <textarea
-            placeholder=""
+            placeholder="..."
             id="w3review"
             name="w3review"
             rows="2"
@@ -110,7 +103,7 @@ export default {
         const formChat = {
           textChat: this.textChat.trim(),
           userName: window.localStorage.getItem("username"),
-          imgAvatar: "https://i.pinimg.com/736x/6e/af/1a/6eaf1a844ae4b6fa6eeb6ff17f468cc0.jpg"
+          imgAvatar: this.imgAvatar,
         };
         this.socket.send(JSON.stringify(formChat));
         this.textChat = "";
@@ -147,9 +140,16 @@ export default {
     SendOutlined,
     EmoJiPicker,
   },
+  created() {
+    this.userName = window.localStorage.getItem("username") || "Ẩn danh";
+    this.imgAvatar =
+      window.localStorage.getItem("img") ||
+      "https://i.pinimg.com/736x/6e/af/1a/6eaf1a844ae4b6fa6eeb6ff17f468cc0.jpg";
+  },
   data() {
     return {
-      userName : window.localStorage.getItem("username"),
+      imgAvatar: null,
+      userName: "",
       textChat: "",
       faceCurrent: null,
       isShowDialogEmojiPicker: false,
@@ -164,7 +164,7 @@ export default {
         id: this.messageList.length,
         message: messageForm.textChat,
         img: messageForm.imgAvatar,
-        name: messageForm.userName
+        name: messageForm.userName,
       });
     };
   },
@@ -266,27 +266,24 @@ export default {
     }
 
     .footer {
-      position: absolute;
-      bottom: 0;
-      width: 680px;
+      width: 90%;
       min-height: 20px;
       display: flex;
       justify-content: space-between;
-      left: 50%;
       gap: 30px;
-      transform: translate(-50%);
+      margin: 0 auto;
       background-color: transparent;
-      padding: 20px;
       border-radius: 16px;
       align-items: center;
+      padding: 8px 0;
 
       .text-chat {
-        flex: 1;
         background-color: rgba($color: aqua, $alpha: 0.1);
         display: flex;
         padding: 8px 16px;
         border-radius: 16px;
         position: relative;
+        width: 100%;
 
         .box {
           position: relative;
@@ -326,15 +323,18 @@ export default {
     }
 
     .body-chat-box {
-      padding: 25px;
+      padding: 0 16px;
       position: relative;
+      height: 80vh;
+      overflow: hidden;
 
       .main-chat {
+        margin: 12px 0;
+        overflow-y: scroll;
         color: #ffffff;
         padding: 0;
         list-style-type: none;
-        height: 75vh;
-        overflow-y: scroll;
+        height: 100%;
         display: flex;
         flex-direction: column;
 
@@ -349,7 +349,7 @@ export default {
 
         &::-webkit-scrollbar-thumb {
           background-color: transparent;
-          border: 2px solid #555555;
+          border: 2px solid rgba($color: aqua, $alpha: 0.1);
         }
 
         .main-liter {
@@ -388,9 +388,15 @@ export default {
     font-size: 20px;
     color: aqua;
     cursor: pointer;
+    z-index: 1;
 
     &:hover {
       opacity: 0.7;
+    }
+  }
+  @media screen and (max-width: 390px), screen and (max-height: 844px) {
+    .header {
+      padding: 8px 20px !important;
     }
   }
 }
