@@ -1,6 +1,6 @@
 <template>
   <div>
-    <QRGenerator :qr="qr"></QRGenerator>
+    <QRGenerator></QRGenerator>
   </div>
 </template>
 

@@ -4,7 +4,6 @@ import { useRouter } from "vue-router";
 import { reactive, ref } from "vue";
 import { DoubleRightOutlined } from "@ant-design/icons-vue";
 
-const props = defineProps(['qr'])
 const qr = reactive({
   url: "",
   svg_output: "",
