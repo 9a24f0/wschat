@@ -12,8 +12,12 @@
             <div class="header-main-avatar-online"></div>
           </div>
           <div class="header-main-infor">
-            <div class="header-main-name">Channel : <b class="name">{{ channel }}</b></div>
-            <div class="header-main-nick">Your name: <b class="name">{{ userName }}</b></div>
+            <div class="header-main-name">
+              Channel : <b class="name">{{ channel }}</b>
+            </div>
+            <div class="header-main-nick">
+              Your name: <b class="name">{{ userName }}</b>
+            </div>
           </div>
         </div>
         <div class="header-contact">
@@ -36,13 +40,15 @@
             :key="item.id"
             :class="item.name == this.userName ? 'reverse' : ''"
           >
-            <div class="avatar-chat">
+            <div>
               <img :src="item.img" />
-              <b class="content-chat-name">{{ item.name }}</b>
+              <!-- <b class="content-chat-name">{{ item.name }}</b> -->
             </div>
-            <span class="content-chat"
-              >{{ item.message }}
-            </span>
+            <div class="content-chat">
+              <p class="content-name">{{ item.name }}</p>
+              <p class="content-message">{{ item.message }}</p>
+              <!-- <span class="content-chat">{{ item.name }} </span> -->
+            </div>
           </li>
         </ul>
       </main>
@@ -249,7 +255,7 @@ export default {
         }
 
         &-infor {
-          .name{
+          .name {
             font-size: 12px;
           }
         }
@@ -376,7 +382,7 @@ export default {
             cursor: pointer;
           }
 
-          span {
+          .content-chat {
             display: block;
             padding: 8px 16px;
             border-radius: 8px;
@@ -384,24 +390,34 @@ export default {
             background-color: rgba($color: aqua, $alpha: 0.1);
             word-break: break-all;
             max-width: 60%;
+            .content-name {
+              color: aqua;
+              text-shadow: #fff 1px 0 10px;
+            }
+            .content-message {
+            }
+            p {
+              padding: 0;
+              margin: 0;
+            }
           }
-          .avatar-chat{
-            position: relative;
-            .content-chat-name {
-            position: absolute;
-            font-size: 7px;
-            font-weight: bold;
-            background-color: transparent;
-            white-space: nowrap;
-          }
-          }
-        
+          // .avatar-chat {
+          //   position: relative;
+          //   .content-chat-name {
+          //     position: absolute;
+          //     font-size: 8px;
+          //     font-weight: bold;
+          //     background-color: transparent;
+          //     white-space: nowrap;
+          //     opacity: 0.5;
+          //   }
+          // }
         }
 
         .reverse {
           flex-direction: row-reverse;
-          .content-chat-name{
-            display: none;
+          p{
+            text-align: end;
           }
         }
       }
@@ -421,7 +437,6 @@ export default {
   @media screen and (max-width: 390px), screen and (max-height: 844px) {
     .header {
       padding: 8px 20px !important;
-
     }
   }
 }
