@@ -173,7 +173,6 @@ export default {
   },
   data() {
     return {
-      // time: null,
       imgAvatar: null,
       userName: "",
       textChat: "",
