@@ -45,7 +45,9 @@
               <!-- <b class="content-chat-name">{{ item.name }}</b> -->
             </div>
             <div class="content-chat">
-              <p class="content-name">{{ item.name }} <span>{{ item.time }}</span></p>
+              <p class="content-name">
+                {{ item.name }} <span>{{ item.time }}</span>
+              </p>
               <p class="content-message">{{ item.message }}</p>
               <!-- <span class="content-chat">{{ item.name }} </span> -->
             </div>
@@ -119,7 +121,7 @@ export default {
           textChat: this.textChat.trim(),
           userName: window.localStorage.getItem("username"),
           imgAvatar: this.imgAvatar,
-          time: this.time
+          time: this.getTimeWhenSendMessage(),
         };
         this.socket.send(JSON.stringify(formChat));
         this.textChat = "";
@@ -140,6 +142,10 @@ export default {
     getEmojiPicker(value) {
       console.log(value);
       this.textChat += value;
+    },
+    getTimeWhenSendMessage() {
+      let today = new Date();
+      return ( today.getHours() + "h:" + today.getMinutes() + "p");
     },
   },
   components: {
@@ -163,11 +169,11 @@ export default {
       "https://i.pinimg.com/736x/6e/af/1a/6eaf1a844ae4b6fa6eeb6ff17f468cc0.jpg";
 
     let today = new Date();
-    this.time = today.getHours() + "h:" + today.getMinutes() + "p"
+    this.time = today.getHours() + "h:" + today.getMinutes() + "p";
   },
   data() {
     return {
-      time: null,
+      // time: null,
       imgAvatar: null,
       userName: "",
       textChat: "",
@@ -185,7 +191,7 @@ export default {
         message: messageForm.textChat,
         img: messageForm.imgAvatar,
         name: messageForm.userName,
-        time: messageForm.time
+        time: messageForm.time,
       });
     };
   },
@@ -400,7 +406,7 @@ export default {
             .content-name {
               color: aqua;
               text-shadow: #fff 1px 0 10px;
-              span{
+              span {
                 font-size: 8px;
               }
             }
