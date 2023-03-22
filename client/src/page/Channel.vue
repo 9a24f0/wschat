@@ -78,6 +78,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import {
   ArrowLeftOutlined,
@@ -93,6 +94,9 @@ import {
   SmileOutlined,
 } from "@ant-design/icons-vue";
 import EmoJiPicker from "@/components/channel/EmojiPicker.vue";
+
+const WS_SERVER = import.meta.env.VITE_WS_SERVER;
+
 export default {
   props: ["channel"],
   updated() {
@@ -158,7 +162,7 @@ export default {
       textChat: "",
       faceCurrent: null,
       isShowDialogEmojiPicker: false,
-      socket: new WebSocket("ws:/localhost:3000"),
+      socket: new WebSocket(WS_SERVER),
       messageList: [],
     };
   },
