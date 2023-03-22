@@ -12,8 +12,8 @@
             <div class="header-main-avatar-online"></div>
           </div>
           <div class="header-main-infor">
-            <div class="header-main-name">Channel : {{ channel }}</div>
-            <div class="header-main-nick">Your name: {{ userName }}</div>
+            <div class="header-main-name">Channel : <b class="name">{{ channel }}</b></div>
+            <div class="header-main-nick">Your name: <b class="name">{{ userName }}</b></div>
           </div>
         </div>
         <div class="header-contact">
@@ -192,7 +192,6 @@ export default {
     position: relative;
     margin: 0 auto;
     max-width: 750px;
-    height: 100vh;
     background-color: #313131;
 
     .background-avatar {
@@ -250,6 +249,9 @@ export default {
         }
 
         &-infor {
+          .name{
+            font-size: 12px;
+          }
         }
 
         &-nick {
@@ -338,7 +340,6 @@ export default {
       overflow: hidden;
 
       .main-chat {
-        margin: 12px 0;
         overflow-y: scroll;
         color: #ffffff;
         padding: 0;
@@ -420,6 +421,7 @@ export default {
   @media screen and (max-width: 390px), screen and (max-height: 844px) {
     .header {
       padding: 8px 20px !important;
+
     }
   }
 }
