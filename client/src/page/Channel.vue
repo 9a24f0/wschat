@@ -36,8 +36,13 @@
             :key="item.id"
             :class="item.name == this.userName ? 'reverse' : ''"
           >
-            <img :src="item.img" />
-            <span class="content-chat">{{ item.message }} </span>
+            <div class="avatar-chat">
+              <img :src="item.img" />
+              <b class="content-chat-name">{{ item.name }}</b>
+            </div>
+            <span class="content-chat"
+              >{{ item.message }}
+            </span>
           </li>
         </ul>
       </main>
@@ -197,7 +202,7 @@ export default {
         width: 100%;
         height: 100%;
         opacity: 0.1;
-        object-fit: fill;
+        object-fit: cover;
       }
     }
 
@@ -356,7 +361,7 @@ export default {
           display: flex;
           margin: 10px 0;
           width: 100%;
-          align-items: end;
+          align-items: center;
 
           img {
             width: 28px;
@@ -375,10 +380,24 @@ export default {
             word-break: break-all;
             max-width: 60%;
           }
+          .avatar-chat{
+            position: relative;
+            .content-chat-name {
+            position: absolute;
+            font-size: 7px;
+            font-weight: bold;
+            background-color: transparent;
+            white-space: nowrap;
+          }
+          }
+        
         }
 
         .reverse {
           flex-direction: row-reverse;
+          .content-chat-name{
+            display: none;
+          }
         }
       }
     }
