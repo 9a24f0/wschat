@@ -103,7 +103,7 @@ import {
 } from "@ant-design/icons-vue";
 import EmoJiPicker from "@/components/channel/EmojiPicker.vue";
 
-const WS_SERVER = import.meta.env.VITE_WS_SERVER;
+// const WS_SERVER = import.meta.env.VITE_WS_SERVER;
 
 export default {
   props: ["channel"],
@@ -116,16 +116,16 @@ export default {
   },
   methods: {
     sendMessage() {
-      if (this.textChat.trim()) {
-        const formChat = {
-          textChat: this.textChat.trim(),
-          userName: window.localStorage.getItem("username"),
-          imgAvatar: this.imgAvatar,
-          time: this.getTimeWhenSendMessage(),
-        };
-        this.socket.send(JSON.stringify(formChat));
-        this.textChat = "";
-      } else return;
+      const formChat = {
+        id: this.messageList.length,
+        name: this.userName,
+        img: this.imgAvatar,
+        message: this.textChat,
+        time: this.getTimeWhenSendMessage(),
+      };
+      this.messageList.push(formChat);
+      console.log("tuan");
+      this.textChat = "";
     },
     backHref() {
       this.$router.go(-1);
@@ -145,7 +145,7 @@ export default {
     },
     getTimeWhenSendMessage() {
       let today = new Date();
-      return ( today.getHours() + "h:" + today.getMinutes() + "p");
+      return today.getHours() + "h:" + today.getMinutes() + "p";
     },
   },
   components: {
@@ -173,25 +173,20 @@ export default {
   },
   data() {
     return {
-      imgAvatar: null,
+      // imgAvatar: null,
       userName: "",
       textChat: "",
       faceCurrent: null,
       isShowDialogEmojiPicker: false,
-      socket: new WebSocket(WS_SERVER),
-      messageList: [],
-    };
-  },
-  mounted() {
-    this.socket.onmessage = async (event) => {
-      const messageForm = JSON.parse(await new Response(event.data).text());
-      this.messageList.push({
-        id: this.messageList.length,
-        message: messageForm.textChat,
-        img: messageForm.imgAvatar,
-        name: messageForm.userName,
-        time: messageForm.time,
-      });
+      messageList: [
+        {
+          id: 0,
+          name: "tuan",
+          img: "https://i.pinimg.com/736x/6e/af/1a/6eaf1a844ae4b6fa6eeb6ff17f468cc0.jpg",
+          message: 'tuancandongsang',
+          time: this.getTimeWhenSendMessage(),
+        },
+      ],
     };
   },
 };
